@@ -2,18 +2,13 @@ import {
   ADD_BUTTON_PRESS,
   DELETE_BUTTON_PRESS,
   ON_CHANGE_TEXT,
-  LOAD_TODOS
+  LOAD_TODOS,
+  SAVE_BUTTON_PRESS
 } from "./types";
+import { AsyncStorage } from "react-native";
+
 
 // functions for loading data from the storage
-const getData = async () => {
-  // Helper function to get data from the storage
-    const state = await AsyncStorage.getItem("state")
-    .then(() => {console.log('in getData, got this data : ',state)})
-    .catch((error) => {console.log('Got this error:',error)})
-};
-
-
 
 export const AddButtonAction = () => {
   return {
@@ -36,7 +31,27 @@ export const onChangeTextAction = (id, text) => {
 };
 
 export const LoadTodosAction = () => {
+  return (dispatch) => {
+    getData(dispatch);
+  }
+};
+
+export const SaveButtonAction = () => {
+
   return {
-    type: LOAD_TODOS
+    type: SAVE_BUTTON_PRESS
   };
 };
+
+const getData = async (dispatch) => {
+  // Returns the state saved before
+
+  var got_state;
+
+  AsyncStorage.getItem('state', (error, result) => {
+  got_state = JSON.parse(result);
+
+  dispatch({type:LOAD_TODOS, payload: got_state});
+  });
+  
+}

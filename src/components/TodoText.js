@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { TextInput, View, TouchableOpacity, Image, Text} from 'react-native';
 import {
     DeleteButtonAction,
-    onChangeTextAction
+    onChangeTextAction,
 } from '../actions';
 
 
@@ -28,6 +28,7 @@ class TodoText extends Component{
     render(){
 
         return(
+         
             <View style={[styles.TextInputViewStyling,{borderColor: this.props.lineColor}]}>
                 <View style={{flex:8}}>
                     <TextInput style={styles.TextInputStyling}
@@ -45,6 +46,7 @@ class TodoText extends Component{
                     </TouchableOpacity>
                 </View>
             </View>
+       
         )
     }
 }
@@ -60,6 +62,7 @@ const styles={
         marginTop:10,
         
     },
+
 
     ButtonStyle:{
         backgroundColor:"rgb(255, 0, 51)",
@@ -83,4 +86,5 @@ const styles={
 
 
 
-export default connect(null, {DeleteButtonAction, onChangeTextAction})(TodoText);
+export default connect(null, {DeleteButtonAction,
+     onChangeTextAction})(TodoText);

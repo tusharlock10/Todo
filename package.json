@@ -20,7 +20,8 @@
     "react-native-web": "^0.11.4",
     "react-navigation-deprecated-tab-navigator": "*",
     "react-redux": "*",
-    "redux": "*"
+    "redux": "*",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.1.1"

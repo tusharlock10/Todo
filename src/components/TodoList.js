@@ -1,14 +1,37 @@
 import React, { Component } from "react";
-import { ScrollView, View } from "react-native";
-import { AddButtonAction, LoadTodosAction } from "../actions";
+import { ScrollView, View, ActivityIndicator } from "react-native";
+import { AddButtonAction, LoadTodosAction, SaveButtonAction } from "../actions";
 import { connect } from "react-redux";
 import AddButton from "./AddButton";
 import TodoText from "./TodoText";
 import Note from "./Note";
 
 class TodoList extends Component {
+
+  componentWillMount() {
+      this.props.LoadTodosAction();
+  }
+
+
   onAddButtonPress() {
     this.props.AddButtonAction();
+  }
+
+  getAddButtonObj() {
+
+    if (this.props.text_changed){
+      return {
+        buttonColor : "rgb(219, 22, 47)",
+        buttonImage : require('../../assets/images/save.png'),
+        onButtonPress : this.props.SaveButtonAction.bind(this)
+    }}
+    
+    return {
+        buttonColor : "rgb(0,161,255)",
+        buttonImage : require('../../assets/images/add.png'),
+        onButtonPress : this.onAddButtonPress.bind(this)
+    }
+
   }
   renderTodos() {
     if (this.props.todos.length === 0) {
@@ -28,21 +51,43 @@ class TodoList extends Component {
     });
   }
 
-  componentWillMount() {
-      this.props.LoadTodosAction();
-  }
+  getLoadedContent(AddButtonOjb){
+    if (this.props.is_loading){
 
-  render() {
+      return (
+        <View style={{flex:1, alignItems:"center", justifyContent: "center"}}>
+          <ActivityIndicator size='large' color="orange"/>
+        </View>
+      )
+
+    }
+
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex:1}}>
         <ScrollView>
           <View style={styles.ViewStyling} />
           {this.renderTodos()}
         </ScrollView>
 
-        <View style={{ height: 100, justifyContent: "flex-end" }}>
-          <AddButton onButtonPress={this.onAddButtonPress.bind(this)} />
+        <View style={{ height: 1, justifyContent: "flex-end" }}>
+          <AddButton onButtonPress={AddButtonOjb.onButtonPress}
+          buttonColor = {AddButtonOjb.buttonColor}
+          buttonImage = {AddButtonOjb.buttonImage}
+          />
         </View>
+      </View>
+    )
+  }
+
+  render() {
+
+    const AddButtonOjb = this.getAddButtonObj()
+    
+    
+
+    return (
+      <View style={{ flex: 1 }}>
+        {this.getLoadedContent(AddButtonOjb)}
       </View>
     );
   }
@@ -59,15 +104,15 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     num: state.TodoList.num,
     todos: state.TodoList.todos,
-    lineColor: state.TodoList.lineColor
+    text_changed: state.TodoList.text_changed,
+    is_loading: state.TodoList.is_loading
   };
 };
 
 export default connect(
   mapStateToProps,
-  { AddButtonAction, LoadTodosAction }
+  { AddButtonAction, LoadTodosAction, SaveButtonAction }
 )(TodoList);

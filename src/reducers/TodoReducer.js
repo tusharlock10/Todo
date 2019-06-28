@@ -2,7 +2,8 @@ import {
   ADD_BUTTON_PRESS,
   DELETE_BUTTON_PRESS,
   ON_CHANGE_TEXT,
-  LOAD_TODOS
+  LOAD_TODOS,
+  SAVE_BUTTON_PRESS
 } from "../actions/types";
 import { AsyncStorage } from "react-native";
 // TodoList: {num:2, todos: [{id:1, lineColor: [1,2,3] ,todo:"Hello"},
@@ -28,35 +29,24 @@ const getLineColor = colors => {
 };
 
 INITIAL_STATE = {
-  num: 2,
-  todos: [
-    { id: 1, lineColor: [10, 20, 30], todo: "Task1" },
-    { id: 2, lineColor: [10, 20, 30], todo: "Task2" }
-  ],
-  latest_lineColor: getLineColor([10, 20, 30])
+  num: 0,
+  todos: [],
+  latest_lineColor: getLineColor([150,150,150]),
+  text_changed:false,
+  is_loading:true,
 };
+
+
 
 const saveData = async (state) => {
-    try {
-        console.log("setting state")
-        await AsyncStorage.setItem('state', 'hello');
-        console.log("setted state")
-      } catch (error) {
-        console.log('Got this error:',error)
-      }
+  // Takes the state of the reducer and saves it as it is
 
-};
+  // getData function is insidethe actions.
 
-const getData = async () => {
-    // Helper function to get data from the storage
-      const state = await AsyncStorage.getItem("state")
-      console.log('in getData, got this data : ',state)
-  };
-
-const exp= async ()=>{
-    console.log("Got value of state: ", await AsyncStorage.getItem('state'))
+  AsyncStorage.setItem('state', JSON.stringify(state));
 
 }
+
 
 export default (state = INITIAL_STATE, action) => {
 
@@ -68,12 +58,18 @@ export default (state = INITIAL_STATE, action) => {
         ...state.todos,
         { id: new_num, todo: "", lineColor: new_lineColor }
       ];
-
-      return {
+      const new_state = {
         num: new_num,
         todos: new_todos,
-        latest_lineColor: new_lineColor
+        latest_lineColor: new_lineColor,
+        text_changed:false,
+        is_loading:false
       };
+
+      saveData(new_state);   // Saving Data on Add_Button_Press
+
+      return new_state
+
 
     case DELETE_BUTTON_PRESS:
       const new_todos_2 = [];
@@ -82,11 +78,18 @@ export default (state = INITIAL_STATE, action) => {
           new_todos_2.push(todo_obj);
         }
       });
-      return {
+
+      const new_state_2 ={
         num: state.num,
         todos: new_todos_2,
-        latest_lineColor: state.latest_lineColor
+        latest_lineColor: state.latest_lineColor,
+        text_changed:false,
+        is_loading:false
       };
+
+      saveData(new_state_2);   // Saving Data on Delete_Button_Press
+
+      return new_state_2
 
     case ON_CHANGE_TEXT:
       const new_todos_3 = [];
@@ -99,13 +102,41 @@ export default (state = INITIAL_STATE, action) => {
       return {
         num: state.num,
         todos: new_todos_3,
-        latest_lineColor: state.latest_lineColor
+        latest_lineColor: state.latest_lineColor,
+        text_changed:true,
+        is_loading:false
       };
 
+    case SAVE_BUTTON_PRESS:
+      const new_state_3 = {
+        num: state.num,
+        todos: state.todos,
+        latest_lineColor: state.latest_lineColor,
+        text_changed:false,
+        is_loading:false
+      };
+
+      saveData(new_state_3);
+      return new_state_3;
+
     case LOAD_TODOS:
-        console.log("In todos")
-        getData();
-        return state;
+      if (action.payload===null){
+        return {
+          num: state.num,
+          todos: state.todos,
+          latest_lineColor: state.latest_lineColor,
+          text_changed:false,
+          is_loading:false
+        };
+      }
+      return {
+        num: action.payload.num,
+        todos: action.payload.todos,
+        latest_lineColor: action.payload.latest_lineColor,
+        text_changed:false,
+        is_loading:false
+      };
+
 
     default:
       return state;

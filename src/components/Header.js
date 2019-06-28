@@ -19,7 +19,7 @@ const styles={
         height:80,
         justifyContent:'center',
         alignItems:'center',
-        elevation:5,
+        elevation:20,
 
     },
     TextStyling:{
