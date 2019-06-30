@@ -10,10 +10,6 @@ import {
 
 class TodoText extends Component{
 
-    // onChangeText(text){
-    //     this.props.onChangeTextAction(text)
-    // }
-
     onDeleteButtonPress(){
         const {id} = this.props;
         this.props.DeleteButtonAction(id);
@@ -60,6 +56,7 @@ const styles={
         flexDirection:'row',
         justifyContent:'flex-end',
         marginTop:10,
+        backgroundColor:"#FFFFFF"
         
     },
 
