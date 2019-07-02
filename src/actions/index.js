@@ -1,9 +1,11 @@
+import { Audio } from 'expo-av';
 import {
   ADD_BUTTON_PRESS,
   DELETE_BUTTON_PRESS,
   ON_CHANGE_TEXT,
   LOAD_TODOS,
-  SAVE_BUTTON_PRESS
+  SAVE_BUTTON_PRESS,
+  CROSS_BUTTON_PRESS
 } from "./types";
 import { AsyncStorage } from "react-native";
 
@@ -42,6 +44,7 @@ export const SaveButtonAction = () => {
     type: SAVE_BUTTON_PRESS
   };
 };
+ 
 
 const getData = async (dispatch) => {
   // Returns the state saved before
@@ -54,4 +57,18 @@ const getData = async (dispatch) => {
   dispatch({type:LOAD_TODOS, payload: got_state});
   });
   
+}
+
+const playAudio = async () =>{
+  const soundObject = new Audio.Sound();
+  await soundObject.loadAsync(require('../../assets/sounds/deleteSound.wav'));
+  await soundObject.playAsync();
+}
+
+export const CrossButtonAction=()=>{
+  playAudio();
+
+  return {
+    type: CROSS_BUTTON_PRESS
+  }
 }

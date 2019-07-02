@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
 import { View, Text, Image, TouchableOpacity} from 'react-native';
+import {CrossButtonAction} from '../actions';
+
 
 
 class Header extends Component{
+
+    onCrossButtonPress(){
+        this.props.CrossButtonAction()
+    }
     
     render(){
         return (
@@ -13,7 +20,8 @@ class Header extends Component{
             </View>
 
             <View style={styles.CrossButtonViewStyle}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                onPress={this.onCrossButtonPress.bind(this)}>
                     <Image source={require('../../assets/images/cross.png')}
                     style={{height:20, width:20}}/>
                 </TouchableOpacity>
@@ -54,4 +62,4 @@ const styles={
     }
 }
 
-export default Header;
+export default connect(null, {CrossButtonAction})(Header);

@@ -8,16 +8,10 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "exp": "^57.2.1",
     "expo": "^33.0.0",
-    "expo-font": "~5.0.1",
-    "lodash": "^4.17.11",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
-    "react-native-router-flux": "*",
-    "react-native-shadow": "^1.2.2",
-    "react-native-web": "^0.11.4",
     "react-navigation-deprecated-tab-navigator": "*",
     "react-redux": "*",
     "redux": "*",
