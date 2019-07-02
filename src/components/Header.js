@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text} from 'react-native';
+import { View, Text, Image, TouchableOpacity} from 'react-native';
 
 
 class Header extends Component{
@@ -7,7 +7,17 @@ class Header extends Component{
     render(){
         return (
         <View style={styles.HeaderStyling}>
-            <Text style={styles.TextStyling}>TODO   LIST</Text>
+            <View style={styles.HeaderViewStyling}>
+                <Text style={styles.TextStyling}
+                selectable={true}>TODO   LIST</Text>
+            </View>
+
+            <View style={styles.CrossButtonViewStyle}>
+                <TouchableOpacity>
+                    <Image source={require('../../assets/images/cross.png')}
+                    style={{height:20, width:20}}/>
+                </TouchableOpacity>
+            </View>
         </View>
     )}
 }
@@ -20,6 +30,8 @@ const styles={
         justifyContent:'center',
         alignItems:'center',
         elevation:20,
+        marginBottom:10,
+        flexDirection:'row'
 
     },
     TextStyling:{
@@ -27,6 +39,18 @@ const styles={
         color:'rgb(230,230,230)',
         fontSize:36,
         fontWeight:'bold',
+    },
+    CrossButtonViewStyle:{
+        marginTop:28,
+        flex:1,
+        alignItems:'center',
+        paddingRight:6,
+
+    },
+    HeaderViewStyling:{
+        flex:4,
+        alignItems:'flex-end',
+        paddingRight:5,
     }
 }
 
