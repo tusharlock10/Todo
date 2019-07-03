@@ -19,7 +19,6 @@ const styles={
         height:80,
         justifyContent:'center',
         alignItems:'center',
-        elevation:20,
 
     },
     TextStyling:{
