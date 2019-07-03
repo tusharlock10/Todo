@@ -7,8 +7,6 @@ import {
   CROSS_BUTTON_PRESS
 } from "../actions/types";
 import { AsyncStorage } from "react-native";
-// TodoList: {num:2, todos: [{id:1, lineColor: [1,2,3] ,todo:"Hello"},
-// {id:2, lineColor: [10,20,30],todo:"Task2"}]}
 
 const get_color_value = (color, dif) => {
   if (color + dif > 255) {

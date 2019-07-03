@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import * as Font from 'expo-font'
 import { TextInput, View, ScrollView, TouchableOpacity, Image} from 'react-native';
 import {Dimensions} from "react-native";
 import {
@@ -10,6 +11,20 @@ import {
 
 
 class TodoText extends Component{
+    constructor(){
+        super();
+        this.state={
+            fontLoaded: false
+        }
+    }
+
+    async componentDidMount(){
+        await Font.loadAsync({
+            'manrope-medium':require('../../assets/fonts/manrope-medium.ttf')
+        })
+
+        this.setState({fontLoaded:true})
+    }
 
     onDeleteButtonPress(){
         const {id} = this.props;
@@ -22,8 +37,30 @@ class TodoText extends Component{
         const {id} = this.props;
         this.props.onChangeTextAction(id, todo_text)
     }
+
+    renderTextInput(){
+        if (this.state.fontLoaded){
+            return (
+                <TextInput style={styles.TextInputStyling}
+                        multiline={true}
+                        placeholder="Enter todo here"
+                        enablesReturnKeyAutomatically={true}
+                        onChangeText={this.onChangeText.bind(this)}
+                        value = {this.props.todo}/>
+            )
+        }
+    }
     render(){
-        const screenWidth = Math.round(Dimensions.get('window').width) + 150 ;
+        const screenWidth = Math.round(Dimensions.get('window').width);
+        const screenHeight = Math.round(Dimensions.get('window').height);
+        var usableWidth;
+
+        if (screenWidth<screenHeight){
+            usableWidth = screenHeight +120;
+        }
+        else {
+            usableWidth = screenWidth +120;
+        }
 
         return(
          
@@ -31,13 +68,8 @@ class TodoText extends Component{
                 <ScrollView style={{flex:1}} horizontal={true}
                 showsHorizontalScrollIndicator={false}>
                 
-                    <View style={{flex:1, width:screenWidth}}>
-                        <TextInput style={styles.TextInputStyling}
-                        multiline={true}
-                        placeholder="Enter todo here"
-                        enablesReturnKeyAutomatically={true}
-                        onChangeText={this.onChangeText.bind(this)}
-                        value = {this.props.todo}/>
+                    <View style={{flex:1, width: usableWidth}}>
+                        {this.renderTextInput()}
                     </View>
 
                     <View style={{flex:1}}>
@@ -81,6 +113,7 @@ const styles={
     },
     TextInputStyling:{
         fontSize:19,
+        fontFamily:'manrope-medium',
         color:"rgb(50,50,50)",
         paddingTop:5
     },
