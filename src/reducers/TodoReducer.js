@@ -3,7 +3,8 @@ import {
   DELETE_BUTTON_PRESS,
   ON_CHANGE_TEXT,
   LOAD_TODOS,
-  SAVE_BUTTON_PRESS
+  SAVE_BUTTON_PRESS,
+  CROSS_BUTTON_PRESS
 } from "../actions/types";
 import { AsyncStorage } from "react-native";
 // TodoList: {num:2, todos: [{id:1, lineColor: [1,2,3] ,todo:"Hello"},
@@ -18,9 +19,6 @@ const get_color_value = (color, dif) => {
 };
 
 const getLineColor = colors => {
-  // num%16 (num*15) for  B
-  // num%24 (num*10) for G
-  // num%12 (num*20) for R
   const R = get_color_value(colors[0], 25);
   const G = get_color_value(colors[1], 20);
   const B = get_color_value(colors[2], 17);
@@ -28,7 +26,7 @@ const getLineColor = colors => {
   return new_colors;
 };
 
-INITIAL_STATE = {
+const INITIAL_STATE = {
   num: 0,
   todos: [],
   latest_lineColor: getLineColor([150,150,150]),
@@ -36,6 +34,13 @@ INITIAL_STATE = {
   is_loading:true,
 };
 
+const CLEAN_STATE = {
+  num: 0,
+  todos: [],
+  latest_lineColor: getLineColor([150,150,150]),
+  text_changed:false,
+  is_loading:false,
+};
 
 
 const saveData = async (state) => {
@@ -90,6 +95,10 @@ export default (state = INITIAL_STATE, action) => {
       saveData(new_state_2);   // Saving Data on Delete_Button_Press
 
       return new_state_2
+    
+    case CROSS_BUTTON_PRESS:
+      saveData(CLEAN_STATE)
+      return CLEAN_STATE
 
     case ON_CHANGE_TEXT:
       const new_todos_3 = [];

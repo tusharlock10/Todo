@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { ScrollView, View, ActivityIndicator } from "react-native";
+import { 
+    ScrollView,
+    View,
+    ActivityIndicator,
+    LayoutAnimation,
+    UIManager,
+    Platform
+ } from "react-native";
 import { AddButtonAction, LoadTodosAction, SaveButtonAction } from "../actions";
 import { connect } from "react-redux";
 import AddButton from "./AddButton";
@@ -7,14 +14,42 @@ import TodoText from "./TodoText";
 import Note from "./Note";
 
 class TodoList extends Component {
+  constructor() {
+    super();
+
+    if (Platform.OS === 'android') {
+      UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }
 
   componentWillMount() {
       this.props.LoadTodosAction();
   }
 
+  componentWillUpdate(){
+    const CustomLayoutSpring = {
+      duration: 750,
+      create: {
+        type: LayoutAnimation.Types.spring,
+        property: LayoutAnimation.Properties.scaleXY,
+        springDamping: 1,
+      },
+      update: {
+        type: LayoutAnimation.Types.spring,
+        springDamping: 1,
+      },
+    };
+
+    LayoutAnimation.configureNext(CustomLayoutSpring);
+  }
 
   onAddButtonPress() {
     this.props.AddButtonAction();
+  }
+
+  onDeleteButtonPress(){
+    const {id} = this.props;
+    this.props.DeleteButtonAction(id);
   }
 
   getAddButtonObj() {
@@ -46,7 +81,10 @@ class TodoList extends Component {
 
       // Here we are returning a TodoText object
       return (
-        <TodoText key={id} todo={todo} id={id} lineColor={rgb_linecolor} />
+        <View style={{flex:1, paddingBottom:3}} key={id}>
+          <TodoText todo={todo} id={id} lineColor={rgb_linecolor}
+          onPress={this.onDeleteButtonPress} />
+        </View>
       );
     });
   }
@@ -64,7 +102,9 @@ class TodoList extends Component {
 
     return (
       <View style={{flex:1}}>
-        <ScrollView>
+        <ScrollView
+        nestedScrollEnabled
+        >
           <View style={styles.ViewStyling} />
           {this.renderTodos()}
         </ScrollView>
