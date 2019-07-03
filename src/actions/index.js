@@ -13,12 +13,14 @@ import { AsyncStorage } from "react-native";
 // functions for loading data from the storage
 
 export const AddButtonAction = () => {
+  playAddAudio();
   return {
     type: ADD_BUTTON_PRESS
   };
 };
 
 export const DeleteButtonAction = id => {
+  playDeleteAudio();
   return {
     type: DELETE_BUTTON_PRESS,
     payload: id
@@ -39,6 +41,7 @@ export const LoadTodosAction = () => {
 };
 
 export const SaveButtonAction = () => {
+  playSaveAudio();
 
   return {
     type: SAVE_BUTTON_PRESS
@@ -59,14 +62,32 @@ const getData = async (dispatch) => {
   
 }
 
-const playAudio = async () =>{
+const playCrossAudio = async () =>{
   const soundObject = new Audio.Sound();
-  await soundObject.loadAsync(require('../../assets/sounds/deleteSound.wav'));
+  await soundObject.loadAsync(require('../../assets/sounds/crossSound.m4a'));
+  await soundObject.playAsync();
+}
+
+const playAddAudio = async () =>{
+  const soundObject = new Audio.Sound();
+  await soundObject.loadAsync(require('../../assets/sounds/addSound.m4a'));
+  await soundObject.playAsync();
+}
+
+const playSaveAudio = async () =>{
+  const soundObject = new Audio.Sound();
+  await soundObject.loadAsync(require('../../assets/sounds/saveSound.m4a'));
+  await soundObject.playAsync();
+}
+
+const playDeleteAudio = async () =>{
+  const soundObject = new Audio.Sound();
+  await soundObject.loadAsync(require('../../assets/sounds/deleteSound.m4a'));
   await soundObject.playAsync();
 }
 
 export const CrossButtonAction=()=>{
-  playAudio();
+  playCrossAudio();
 
   return {
     type: CROSS_BUTTON_PRESS
