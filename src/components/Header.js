@@ -14,7 +14,9 @@ class Header extends Component{
     render(){
         return (
         <View style={styles.HeaderStyling}>
-            <View style={styles.HeaderViewStyling}>
+            <View style={styles.CrossButtonViewStyle}/>
+
+            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
                 <Text style={styles.TextStyling}
                 selectable={true}>TODO   LIST</Text>
             </View>
@@ -23,7 +25,7 @@ class Header extends Component{
                 <TouchableOpacity
                 onPress={this.onCrossButtonPress.bind(this)}>
                     <Image source={require('../../assets/images/cross.png')}
-                    style={{height:20, width:20}}/>
+                    style={{height:24, width:24}}/>
                 </TouchableOpacity>
             </View>
         </View>
@@ -37,10 +39,9 @@ const styles={
         height:80,
         justifyContent:'center',
         alignItems:'center',
-
         elevation:20,
         marginBottom:10,
-        flexDirection:'row'
+        flexDirection:'row',
 
     },
     TextStyling:{
@@ -50,15 +51,17 @@ const styles={
         fontWeight:'bold',
     },
     CrossButtonViewStyle:{
-        marginTop:28,
-        flex:1,
+        width:50,
+        height:50,
         alignItems:'center',
-        paddingRight:6,
-
+        justifyContent:'center',
+        padding:5,
+        marginRight:10,
+        marginTop:15,
     },
     HeaderViewStyling:{
-        flex:4,
-        alignItems:'flex-end',
+        flex:10,
+        alignItems:'center',
         paddingRight:5,
     }
 }

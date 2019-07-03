@@ -14,6 +14,7 @@ import TodoText from "./TodoText";
 import Note from "./Note";
 
 class TodoList extends Component {
+  
   constructor() {
     super();
 
@@ -104,6 +105,7 @@ class TodoList extends Component {
       <View style={{flex:1}}>
         <ScrollView
         nestedScrollEnabled
+        bouncesZoom
         >
           <View style={styles.ViewStyling} />
           {this.renderTodos()}

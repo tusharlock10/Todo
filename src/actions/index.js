@@ -52,8 +52,8 @@ export const SaveButtonAction = () => {
 const getData = async (dispatch) => {
   // Returns the state saved before
 
-  var got_state;
 
+  var got_state;
   AsyncStorage.getItem('state', (error, result) => {
   got_state = JSON.parse(result);
 
@@ -61,6 +61,16 @@ const getData = async (dispatch) => {
   });
   
 }
+
+export const CrossButtonAction=()=>{
+  playCrossAudio();
+
+  return {
+    type: CROSS_BUTTON_PRESS
+  }
+}
+
+// Audio helper functions below
 
 const playCrossAudio = async () =>{
   const soundObject = new Audio.Sound();
@@ -84,12 +94,4 @@ const playDeleteAudio = async () =>{
   const soundObject = new Audio.Sound();
   await soundObject.loadAsync(require('../../assets/sounds/deleteSound.m4a'));
   await soundObject.playAsync();
-}
-
-export const CrossButtonAction=()=>{
-  playCrossAudio();
-
-  return {
-    type: CROSS_BUTTON_PRESS
-  }
 }
