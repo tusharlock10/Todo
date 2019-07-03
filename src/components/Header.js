@@ -1,34 +1,63 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import { View, Text, Image, TouchableOpacity} from 'react-native';
+import * as Font from 'expo-font'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {CrossButtonAction} from '../actions';
 
 
 
 class Header extends Component{
+    constructor(){
+        super();
+        this.state={
+            fontLoaded: false
+        }
+    }
+
+    async componentDidMount(){
+        await Font.loadAsync({
+            'Gotham-Black':require('../../assets/fonts/Gotham-Black.ttf')
+        })
+
+        this.setState({fontLoaded:true})
+    }
+    
+
 
     onCrossButtonPress(){
         this.props.CrossButtonAction()
     }
+
+    renderHeader(){
+        if (this.state.fontLoaded){
+            return(
+            <View style={{flex:1, alignItems:'center', justifyContent:'center', flexDirection:'row',}}>
+                <View style={styles.CrossButtonViewStyle}/>
+
+                <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                    <Text style={styles.TextStyling}
+                    selectable={true}>YOUR TODOs</Text>
+                </View>
+
+                <View style={styles.CrossButtonViewStyle}>
+                    <TouchableOpacity
+                    onPress={this.onCrossButtonPress.bind(this)}>
+                        <Image source={require('../../assets/images/cross.png')}
+                        style={{height:24, width:24}}/>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            
+        )
+        }
+    }
     
     render(){
         return (
-        <View style={styles.HeaderStyling}>
-            <View style={styles.CrossButtonViewStyle}/>
-
-            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                <Text style={styles.TextStyling}
-                selectable={true}>TODO   LIST</Text>
+            <View style={styles.HeaderStyling}>
+                {this.renderHeader()}
             </View>
-
-            <View style={styles.CrossButtonViewStyle}>
-                <TouchableOpacity
-                onPress={this.onCrossButtonPress.bind(this)}>
-                    <Image source={require('../../assets/images/cross.png')}
-                    style={{height:24, width:24}}/>
-                </TouchableOpacity>
-            </View>
-        </View>
+        
     )}
 }
 
@@ -39,7 +68,6 @@ const styles={
         height:80,
         justifyContent:'center',
         alignItems:'center',
-        elevation:20,
         marginBottom:10,
         flexDirection:'row',
 
@@ -48,21 +76,16 @@ const styles={
         top:10,
         color:'rgb(230,230,230)',
         fontSize:36,
-        fontWeight:'bold',
+        fontFamily:'Gotham-Black'
+
     },
     CrossButtonViewStyle:{
+        top:10,
         width:50,
         height:50,
         alignItems:'center',
         justifyContent:'center',
-        padding:5,
-        marginRight:10,
-        marginTop:15,
-    },
-    HeaderViewStyling:{
-        flex:10,
-        alignItems:'center',
-        paddingRight:5,
+        paddingTop:5
     }
 }
 

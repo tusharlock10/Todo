@@ -58,7 +58,7 @@ class TodoList extends Component {
     if (this.props.text_changed){
       return {
         buttonColor : "rgb(219, 22, 47)",
-        buttonImage : require('../../assets/images/save.png'),
+        buttonImage : require('../../assets/images/save.gif'),
         onButtonPress : this.props.SaveButtonAction.bind(this)
     }}
     
