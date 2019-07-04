@@ -9,7 +9,7 @@ const AddButton =(props)=>{
             onPress={props.onButtonPress}>
 
                 <View style={[styles.ButtonStyling, {backgroundColor:props.buttonColor}]}>  
-                    <Image style={{height:24, width:24}} 
+                    <Image style={{height:30, width:30}} 
                     source={props.buttonImage}/>
                 </View>
             </TouchableOpacity>

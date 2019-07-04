@@ -4,6 +4,10 @@
     "slug": "Todo",
     "privacy": "public",
     "sdkVersion": "33.0.0",
+    "androidStatusBar":{
+      "barStyle":"light-content",
+      "backgroundColor": "#323232"
+    },
     "android":{
       "package":"com.tjproductions.todo",
       "versionCode":1,
@@ -12,11 +16,12 @@
     },
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
+    "appID":"com.tjproductions.todo",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
+    "primaryColor":"#323232",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",

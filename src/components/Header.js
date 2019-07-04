@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import * as Font from 'expo-font'
-import { View, Text, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
+import { View, Text, Image, TouchableOpacity} from 'react-native';
 import {CrossButtonAction} from '../actions';
 
 
@@ -65,7 +65,7 @@ const styles={
     HeaderStyling:{
         backgroundColor: "rgb(50,50,50)",
         width:null,
-        height:80,
+        height:70,
         justifyContent:'center',
         alignItems:'center',
         marginBottom:10,
@@ -73,14 +73,12 @@ const styles={
 
     },
     TextStyling:{
-        top:10,
         color:'rgb(230,230,230)',
         fontSize:36,
         fontFamily:'Gotham-Black'
 
     },
     CrossButtonViewStyle:{
-        top:10,
         width:50,
         height:50,
         alignItems:'center',
