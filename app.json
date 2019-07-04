@@ -18,7 +18,6 @@
       "ios",
       "android"
     ],
-    "appID":"com.tjproductions.todo",
     "version": "1.0.0",
     "orientation": "default",
     "primaryColor":"#323232",

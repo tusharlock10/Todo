@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 
 
-const appID = "com.google.android.keep"// data.expo.appID;
-
+const appID = data.expo.android.package;
+console.log(appID)
 
 var StoreImage;
 var StoreLink;
