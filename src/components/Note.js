@@ -65,10 +65,10 @@ class Note extends Component{
         var usableWidth;
 
         if (screenWidth>screenHeight){
-            usableWidth = screenHeight - this.state.imgSizeSub;
+            usableWidth = Math.round(screenHeight * this.state.imgSizeSub);
         }
         else {
-            usableWidth = screenWidth - this.state.imgSizeSub;
+            usableWidth = Math.round(screenWidth * this.state.imgSizeSub);
         }
         
         if (this.state.fontLoaded){ 
